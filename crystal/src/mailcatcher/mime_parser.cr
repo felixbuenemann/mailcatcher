@@ -386,8 +386,12 @@ module MailCatcher
     private def decode_header(value : String?) : String?
       return nil unless value
 
+      # RFC 2047: Remove whitespace between adjacent encoded-words
+      # Pattern: =?...?= followed by whitespace followed by =?...?=
+      collapsed = value.gsub(/\?=\s+=\?/) { "?==?" }
+
       # Decode RFC 2047 encoded words: =?charset?encoding?text?=
-      value.gsub(/=\?([^?]+)\?([BQbq])\?([^?]*)\?=/) do |match|
+      collapsed.gsub(/=\?([^?]+)\?([BQbq])\?([^?]*)\?=/) do |match|
         charset = $1
         encoding = $2.upcase
         text = $3
