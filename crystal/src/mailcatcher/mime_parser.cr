@@ -348,17 +348,25 @@ module MailCatcher
         byte = bytes[i]
 
         if byte == '='.ord
-          if i + 2 < bytes.size
-            next_char = bytes[i + 1].chr
-            if next_char == '\r' || next_char == '\n'
-              # Soft line break - skip =\r\n or =\n
-              i += 1
-              i += 1 if i < bytes.size && bytes[i] == '\n'.ord
-              i += 1
+          # Check for soft line break: =\r\n or =\n or =\r
+          if i + 1 < bytes.size
+            next_byte = bytes[i + 1]
+            if next_byte == '\r'.ord
+              # =\r or =\r\n
+              i += 2
+              if i < bytes.size && bytes[i] == '\n'.ord
+                i += 1  # skip \n after \r
+              end
+              next
+            elsif next_byte == '\n'.ord
+              # =\n
+              i += 2
               next
             end
+          end
 
-            # Try to decode hex
+          # Try to decode hex =XX
+          if i + 2 < bytes.size
             hex = String.new(Slice.new(2) { |j| bytes[i + 1 + j] })
             if hex.matches?(/^[0-9A-Fa-f]{2}$/)
               result.write_byte(hex.to_i(16).to_u8)
