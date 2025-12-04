@@ -22,7 +22,7 @@ module MailCatcher
       {% end %}
 
       OptionParser.parse(args) do |parser|
-        parser.banner = "Usage: mailcatcher [options]"
+        parser.banner = "MailCatcher v#{VERSION}\nUsage: mailcatcher [options]"
 
         parser.on("--ip IP", "Set the ip address of both servers") do |ip|
           config.smtp_ip = ip

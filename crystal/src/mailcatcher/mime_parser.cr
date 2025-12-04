@@ -195,8 +195,11 @@ module MailCatcher
       # Split by boundary
       sections = body.split(delimiter)
 
+      # Skip the first section (preamble - content before the first boundary)
+      sections = sections.skip(1)
+
       sections.each do |section|
-        # Skip preamble and epilogue
+        # Skip epilogue and empty sections
         next if section.strip.empty?
         next if section.strip == "--" # End marker
 
@@ -206,6 +209,9 @@ module MailCatcher
         # Parse this part
         part = parse_part(section)
         if part
+          # Skip parts with empty bodies (malformed)
+          next if part.body.empty?
+
           # Check if this part is itself multipart
           part_content_type = get_part_header(section, "content-type")
           if part_content_type && multipart?(part_content_type)
