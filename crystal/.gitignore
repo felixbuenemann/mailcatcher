@@ -1,15 +1,15 @@
 # Dependencies
 /lib/
-/node_modules/
 
 # Build outputs
 /bin/
 
-# Lock files (can be generated)
-package-lock.json
-
 # Editor files
 .idea/
+.vscode/
 *.swp
 *.swo
 *~
+
+# macOS
+.DS_Store
