@@ -19,6 +19,9 @@ module MailCatcher
       Kemal.config.host_binding = config.http_ip
       Kemal.config.port = config.http_port
 
+      # Suppress Kemal startup/shutdown messages
+      Log.setup(:warn)
+
       setup_routes
     end
 
