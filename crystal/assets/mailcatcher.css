@@ -145,7 +145,7 @@ body > header h1 {
   margin-left: 6px;
   padding: 6px;
   padding-left: 30px;
-  background: url(assets/logo.png) left center no-repeat;
+  background: url(logo.png) left center no-repeat;
   background-size: 24px 24px;
   font-size: 18px;
   font-weight: bold;
@@ -470,7 +470,7 @@ iframe {
 /* Retina logo */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   body > header h1 {
-    background-image: url(assets/logo_2x.png);
+    background-image: url(logo_2x.png);
   }
 }
 
