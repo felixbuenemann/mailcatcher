@@ -1,0 +1,15 @@
+# Dependencies
+/lib/
+/node_modules/
+
+# Build outputs
+/bin/
+
+# Lock files (can be generated)
+package-lock.json
+
+# Editor files
+.idea/
+*.swp
+*.swo
+*~
