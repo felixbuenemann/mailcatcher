@@ -79,11 +79,12 @@ module MailCatcher
 
       message_id = db.scalar("SELECT last_insert_rowid()").as(Int64)
 
-      # Insert parts
-      parsed.parts.each do |part|
+      # Insert parts (generate CID if none exists for attachment lookup)
+      parsed.parts.each_with_index do |part, index|
+        cid = part.cid || "part-#{index}"
         add_message_part(
           message_id,
-          part.cid,
+          cid,
           part.mime_type,
           part.is_attachment ? 1 : 0,
           part.filename,
