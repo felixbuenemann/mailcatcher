@@ -79,7 +79,7 @@ module MailCatcher
     # Open browser if requested
     if cfg.browse
       spawn do
-        sleep 0.5 # Give servers time to start
+        sleep 0.5.seconds # Give servers time to start
         browse(cfg.http_url)
       end
     end
@@ -87,7 +87,7 @@ module MailCatcher
     # Daemonize if requested (using libc daemon function)
     if cfg.daemon
       spawn do
-        sleep 0.1 # Give servers time to start
+        sleep 0.1.seconds # Give servers time to start
         if cfg.quittable?
           puts "*** MailCatcher runs as a daemon by default. Go to the web interface to quit."
         else
@@ -101,7 +101,7 @@ module MailCatcher
 
     # Keep main fiber alive
     while @@running
-      sleep 1
+      sleep 1.second
     end
   end
 
@@ -118,7 +118,7 @@ module MailCatcher
     spawn do
       @@smtp_server.try(&.stop)
       Web.stop
-      sleep 0.5
+      sleep 0.5.seconds
       exit(0)
     end
   end
