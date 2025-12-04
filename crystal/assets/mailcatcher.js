@@ -434,7 +434,6 @@ class MailCatcher {
           document.querySelector('#message .views .tab.format:not([style*="display: none"])')?.classList.add('selected');
         }
 
-        const attachmentsContainer = document.querySelector('#message .metadata .attachments');
         const attachmentsDD = document.querySelector('#message .metadata dd.attachments');
 
         if (message.attachments?.length) {
@@ -450,9 +449,10 @@ class MailCatcher {
             ul.appendChild(li);
           });
           attachmentsDD.appendChild(ul);
-          attachmentsContainer.style.display = '';
+          // Show BOTH dt.attachments and dd.attachments
+          document.querySelectorAll('#message .metadata .attachments').forEach(el => el.style.display = 'block');
         } else {
-          attachmentsContainer.style.display = 'none';
+          document.querySelectorAll('#message .metadata .attachments').forEach(el => el.style.display = '');
         }
 
         document.querySelector('#message .views .download a').href = `messages/${id}.eml`;
